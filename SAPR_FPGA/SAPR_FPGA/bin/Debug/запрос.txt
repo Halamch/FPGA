@@ -1,0 +1,15 @@
+SELECT 
+FROM (((Схема INNER JOIN (Маршрут INNER JOIN Путь ON Маршрут.Номер_маршрута = Путь.Номер_маршрута) ON Схема.Номер_схемы = Маршрут.Номер_схемы) INNER JOIN (ПЛИС INNER JOIN Проект ON ПЛИС.Номер_ПЛИС = Проект.Номер_ПЛИС) ON Схема.Номер_схемы = Проект.Номер_схемы) INNER JOIN Трасса ON Путь.Номер_пути = Трасса.Номер_пути) INNER JOIN Элемент ON (Элемент.Номер_элемента = Маршрут.Элемент_источник) AND (Схема.Номер_схемы = Элемент.Номер_схемы);
+
+
+SELECT Проект.Номер_проекта,Проект.Наименование,ПЛИС.Модель,Схема.Наименование,Схема.Размещена,Схема.Трассирована
+FROM Проект INNER JOIN ПЛИС ON Проект.Номер_ПЛИС = ПЛИС.Номер_ПЛИС INNER JOIN Схема ON Проект.Номер_Схемы = Схема.Номер_Схемы
+
+FROM
+    ((tbl_employee
+    INNER JOIN tbl_netpay
+    ON tbl_employee.emp_id = tbl_netpay.emp_id)
+    INNER JOIN tbl_gross
+    ON tbl_employee.emp_id = tbl_gross.emp_ID)
+    INNER JOIN tbl_tax
+    ON tbl_employee.emp_id = tbl_tax.emp_ID;
