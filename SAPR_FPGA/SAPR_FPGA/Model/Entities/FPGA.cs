@@ -8,5 +8,8 @@ namespace SAPR_FPGA
 {
     class FPGA
     {
+        public string Model;
+        public int CountCPD;
+        public int ChannelWidth;
     }
 }

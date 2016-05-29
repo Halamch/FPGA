@@ -33,12 +33,16 @@ namespace SAPR_FPGA
         {
             string answer = "";
             Model.ShowProjects(ref answer);
-            openproject = new OpenProject(Model.Exprojects);
-            openproject.Show();
-            
+            openproject = new OpenProject(Model.Exprojects); // инициализация окна выбора проекта и передача списка проектов полученных из Model
+            openproject.Show(); // показ окна выбора проекта
+            openproject.ProjectSelected += GetProjectIndex; // подписка на событие выбора проекта
+
             //MessageBox.Show(answer);
         }
 
-     
+        private void GetProjectIndex(int index) // обработчик события выбора проекта
+        {
+            Model.ImportFromDB(index);
+        }
     }
 }

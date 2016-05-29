@@ -16,13 +16,15 @@ namespace SAPR_FPGA
         OleDbConnection connect;
         private OleDbCommand MyCommand;
         private String SqlString; // строка для запросов
+        FPGA fpga = new FPGA();
+        Scheme scheme = new Scheme();
 
         public List<ProjectExploler> Exprojects
         {
             get { return _exprojects; }
         }
 
-        public OleDbConnection ShowProjects(ref string ErrorMessage) // показать все проекты
+        public void ShowProjects(ref string ErrorMessage) // показать все проекты
         {
             try
             {
@@ -39,21 +41,50 @@ namespace SAPR_FPGA
                     _exprojects.Add(new ProjectExploler(myDataReader["Номер_проекта"].ToString(), myDataReader["Проект.Наименование"].ToString()
                         , myDataReader["Модель"].ToString(), myDataReader["Схема.Наименование"].ToString(), myDataReader["Размещена"].ToString()
                         , myDataReader["Трассирована"].ToString()));// извлечение данных о проекте и инициализация элементов списка ProjectExploler
-                    MessageBox.Show(myDataReader["Проект.Наименование"].ToString());
+                    //MessageBox.Show(myDataReader["Проект.Наименование"].ToString());
                 }
 
             }
             catch (Exception e)
             {
                 ErrorMessage = e.Message;
-                return null; // проблемы с установкой соединения
             }
             connect.Close();
-            return null;
         }
-        public bool ImportFromDB()
+        public string ImportFromDB(int index)
         {
-            return true;
+            string ErrorMessage = "";
+            try
+            {
+                connect = new OleDbConnection(ConnectionString);// Создание объекта соединения
+                connect.Open();// Открытие соединения
+
+                // Заполнение данных о ПЛИС и о схеме
+                SqlString = "SELECT ПЛИС.Модель,ПЛИС.Количество_КЛБ,ПЛИС.Ширина_канала,Схема.Номер_схемы," +
+                            "Схема.Наименование FROM ((Проект INNER JOIN ПЛИС ON Проект.Номер_ПЛИС = ПЛИС.Номер_ПЛИС) " +
+                            "INNER JOIN Схема ON Проект.Номер_схемы = Схема.Номер_схемы) WHERE Проект.Номер_проекта = @index;"; // SQL-запрос показа всех проектов
+                MyCommand = new OleDbCommand(SqlString, connect); // Формирование команды запроса
+                OleDbParameter Parameter1 = new OleDbParameter();
+                Parameter1.OleDbType = OleDbType.VarChar;
+                Parameter1.ParameterName = "@index"; // задание параметра для запроса
+                Parameter1.Value = index;
+                MyCommand.Parameters.Add(Parameter1);
+                OleDbDataReader myDataReader = MyCommand.ExecuteReader();//Выполнение SQL-команды   
+                while (myDataReader.Read())
+                {
+                    fpga.Model = myDataReader["Модель"].ToString();
+                    fpga.CountCPD = Convert.ToInt32(myDataReader["Количество_КЛБ"].ToString());
+                    fpga.ChannelWidth = Convert.ToInt32(myDataReader["Ширина_канала"].ToString());
+                    scheme.NumScheme = Convert.ToInt32(myDataReader["Номер_схемы"].ToString());
+                    scheme.name = myDataReader["Наименование"].ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                ErrorMessage = e.Message;
+            }
+            return String.Empty;
+
         }
     }
 }
