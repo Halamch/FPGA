@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using SAPR_FPGA.View;
 namespace SAPR_FPGA
 {
     /// <summary>
@@ -22,6 +22,7 @@ namespace SAPR_FPGA
     {
         View.View View = new View.View(); // объект представления
         Model_ Model = new Model_(); // объект модели
+        OpenProject openproject; // окно открытия проекта
         public MainWindow()
         {
             InitializeComponent();
@@ -32,7 +33,10 @@ namespace SAPR_FPGA
         {
             string answer = "";
             Model.ShowProjects(ref answer);
-            MessageBox.Show(answer);
+            openproject = new OpenProject(Model.Exprojects);
+            openproject.Show();
+            
+            //MessageBox.Show(answer);
         }
 
      

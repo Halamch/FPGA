@@ -1,0 +1,25 @@
+﻿<Window x:Class="SAPR_FPGA.View.OpenProject"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Открыть проект" Height="300" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="ForDataGrid" Grid.Row="0">
+            <DataGrid x:Name="DG_projects" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        </Grid>
+
+        <Grid x:Name="ForButtons" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" x:Name="Open" Content="Открыть" Margin="5,5,5,5"/>
+            <Button Grid.Column="1" x:Name="Cancel" Content="Отмена" Margin="5,5,5,5"/>
+        </Grid>
+
+    </Grid>
+
+</Window>

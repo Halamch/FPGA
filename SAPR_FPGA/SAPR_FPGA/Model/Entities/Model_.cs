@@ -12,10 +12,16 @@ namespace SAPR_FPGA
     class Model_
     {
         String ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=FPGADATABASE.accdb"; //Строка соединения
-        private List<ProjectExploler> Exprojects; // объект хранящий проекты для просмотра
+        private List<ProjectExploler> _exprojects; // объект хранящий проекты для просмотра
         OleDbConnection connect;
         private OleDbCommand MyCommand;
         private String SqlString; // строка для запросов
+
+        public List<ProjectExploler> Exprojects
+        {
+            get { return _exprojects; }
+        }
+
         public OleDbConnection ShowProjects(ref string ErrorMessage) // показать все проекты
         {
             try
@@ -27,10 +33,10 @@ namespace SAPR_FPGA
                             "INNER JOIN Схема ON Проект.Номер_Схемы = Схема.Номер_Схемы);"; // SQL-запрос показа всех проектов
                 MyCommand = new OleDbCommand(SqlString, connect); // Формирование команды запроса
                 OleDbDataReader myDataReader = MyCommand.ExecuteReader();//Выполнение SQL-команды
-                Exprojects = new List<ProjectExploler>();
+                _exprojects = new List<ProjectExploler>();
                 while (myDataReader.Read())
                 {
-                    Exprojects.Add(new ProjectExploler(myDataReader["Номер_проекта"].ToString(), myDataReader["Проект.Наименование"].ToString()
+                    _exprojects.Add(new ProjectExploler(myDataReader["Номер_проекта"].ToString(), myDataReader["Проект.Наименование"].ToString()
                         , myDataReader["Модель"].ToString(), myDataReader["Схема.Наименование"].ToString(), myDataReader["Размещена"].ToString()
                         , myDataReader["Трассирована"].ToString()));// извлечение данных о проекте и инициализация элементов списка ProjectExploler
                     MessageBox.Show(myDataReader["Проект.Наименование"].ToString());

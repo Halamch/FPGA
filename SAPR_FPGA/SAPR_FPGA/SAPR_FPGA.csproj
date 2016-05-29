@@ -61,6 +61,9 @@
     <Compile Include="Model\Entities\Path.cs" />
     <Compile Include="Model\Entities\ProjectExploler.cs" />
     <Compile Include="Model\Entities\Track.cs" />
+    <Compile Include="View\OpenProject.xaml.cs">
+      <DependentUpon>OpenProject.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\View.xaml.cs">
       <DependentUpon>View.xaml</DependentUpon>
     </Compile>
@@ -76,6 +79,10 @@
       <DependentUpon>MainController.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\OpenProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
