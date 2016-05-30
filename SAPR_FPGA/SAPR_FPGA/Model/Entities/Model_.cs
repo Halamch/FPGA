@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.OleDb;
 using System.Windows;
-using SAPR_FPGA.Model;
+using SAPR_FPGA.Model.Entities;
 
 namespace SAPR_FPGA
 {

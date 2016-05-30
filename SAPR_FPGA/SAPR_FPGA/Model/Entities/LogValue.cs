@@ -4,15 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAPR_FPGA.Model
+namespace SAPR_FPGA.Model.Entities
 {
-    enum LogValue // ОДЗ Элементов
+    enum LogValue // ОДЗ элемента
     {
-        Invertor,
+        INV,
         AND,
-        OR,
-        XOR
+        XOR,
+        OR
     }
-
-
 }

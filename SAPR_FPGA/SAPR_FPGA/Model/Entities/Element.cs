@@ -3,36 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SAPR_FPGA.Model;
+using SAPR_FPGA.Model.Entities;
 namespace SAPR_FPGA
 {
     class Element // элемент
     {
-        private LogValue _Value; // логическое значение
-        private int GorizontalIndex; // координата х
-        private int VerticalIndex; // координата у
+        private LogValue _logValue; // логическое значение элемента
+        private int GorizontalIndex; // координата по горизонтали
+        private int VerticalIndex; // координата по вертикали
 
         public Element(params object[] arguments)
         {
-            try
+            switch (arguments[0].ToString().Trim()) // заполнение лог.элемента
             {
-                switch (arguments[0].ToString().Trim()) // логическое значение
-                {
-                    case "INV": _Value = LogValue.Invertor; break;
-                    case "OR": _Value = LogValue.OR; break;
-                    case "AND": _Value = LogValue.AND; break;
-                    case "XOR": _Value = LogValue.XOR; break;
-                }
-                GorizontalIndex = arguments[1].ToString().Trim() == String.Empty ? 0 : Convert.ToInt32(arguments[1].ToString().Trim()); // координата по горизонтали
-                VerticalIndex = arguments[2].ToString().Trim() == String.Empty ? 0 : Convert.ToInt32(arguments[2].ToString().Trim()); // координата по вертикали
+                case "INV":_logValue = LogValue.INV;break;
+                case "AND": _logValue = LogValue.AND; break;
+                case "OR": _logValue = LogValue.OR; break;
+                case "XOR": _logValue = LogValue.XOR; break;
             }
-            catch
-            {
-                
-
-            }
-      
-
+            GorizontalIndex = arguments[1].ToString().Trim() == String.Empty ? 0: Convert.ToInt32(arguments[1].ToString().Trim());// заполнение координаты по горизонтали
+            VerticalIndex = arguments[2].ToString().Trim() == String.Empty ? 0 : Convert.ToInt32(arguments[2].ToString().Trim());// заполнение координаты по вертикали
         }
+
     }
 }
