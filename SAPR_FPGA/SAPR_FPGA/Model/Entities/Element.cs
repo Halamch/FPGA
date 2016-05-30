@@ -8,7 +8,7 @@ namespace SAPR_FPGA
 {
     class Element // элемент
     {
-        private LogValue _logValue; // логическое значение элемента
+        public LogValue _logValue; // логическое значение элемента
         private int GorizontalIndex; // координата по горизонтали
         private int VerticalIndex; // координата по вертикали
 

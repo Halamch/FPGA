@@ -20,7 +20,7 @@ namespace SAPR_FPGA
         FPGA fpga; // данные о модели ПЛИС
         Scheme scheme; // Номер схемы и наименование
         List<Route> routes;  // маршруты
-        private List<Element> elements; //список элементов схемы 
+        private List<Element> elements; //список элементов схемы
 
         public List<ProjectExploler> Exprojects
         {
@@ -102,6 +102,24 @@ namespace SAPR_FPGA
                         myDataReader["Индекс_КЛБ_поВертикали"].ToString()));
                 }
 
+                //Заполнение данных о маршруте
+                SqlString = "SELECT Маршрут.Элемент_источник,Маршрут.Элемент_приемник,Маршрут.Длина_маршрута " +
+                            "FROM Маршрут WHERE Маршрут.Номер_схемы = @SchemeNum;"; // SQL-запрос показа всех проектов
+                MyCommand = new OleDbCommand(SqlString, connect); // Формирование команды запроса
+                Parameter1 = new OleDbParameter();
+                Parameter1.OleDbType = OleDbType.VarChar;
+                Parameter1.ParameterName = "@SchemeNum"; // задание параметра для запроса
+                Parameter1.Value = scheme.NumScheme;
+                MyCommand.Parameters.Add(Parameter1);
+                myDataReader = MyCommand.ExecuteReader();//Выполнение SQL-команды  
+                routes = new List<Route>();
+                while (myDataReader.Read())
+                {
+                    int i = Convert.ToInt32(myDataReader["Элемент_источник"].ToString()) - 1;
+                    int j = Convert.ToInt32(myDataReader["Элемент_приемник"].ToString()) - 1;
+                    int length = myDataReader["Длина_маршрута"].ToString().Trim() == String.Empty ? 0 : Convert.ToInt32(myDataReader["Длина_маршрута"].ToString());
+                    routes.Add(new Route(elements[i], elements[j], length));
+                }
             }
             catch (Exception e)
             {
