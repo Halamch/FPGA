@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Entities\LogValue.cs" />
     <Compile Include="Model\Entities\Model_.cs" />
     <Compile Include="Model\Entities\Path.cs" />
     <Compile Include="Model\Entities\ProjectExploler.cs" />

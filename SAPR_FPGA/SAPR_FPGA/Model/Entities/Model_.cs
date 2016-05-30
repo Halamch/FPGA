@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.OleDb;
 using System.Windows;
+using SAPR_FPGA.Model;
 
 namespace SAPR_FPGA
 {
@@ -16,8 +17,10 @@ namespace SAPR_FPGA
         OleDbConnection connect;
         private OleDbCommand MyCommand;
         private String SqlString; // строка для запросов
-        FPGA fpga = new FPGA();
-        Scheme scheme = new Scheme();
+        FPGA fpga; // данные о модели ПЛИС
+        Scheme scheme; // Номер схемы и наименование
+        List<Route> routes;  // маршруты
+        private List<Element> elements; //список элементов схемы 
 
         public List<ProjectExploler> Exprojects
         {
@@ -58,6 +61,9 @@ namespace SAPR_FPGA
             {
                 connect = new OleDbConnection(ConnectionString);// Создание объекта соединения
                 connect.Open();// Открытие соединения
+                routes = new List<Route>();
+                fpga = new FPGA();
+                scheme = new Scheme();
 
                 // Заполнение данных о ПЛИС и о схеме
                 SqlString = "SELECT ПЛИС.Модель,ПЛИС.Количество_КЛБ,ПЛИС.Ширина_канала,Схема.Номер_схемы," +
@@ -78,6 +84,24 @@ namespace SAPR_FPGA
                     scheme.NumScheme = Convert.ToInt32(myDataReader["Номер_схемы"].ToString());
                     scheme.name = myDataReader["Наименование"].ToString();
                 }
+
+                //Заполнение данных об элементах
+                SqlString = "SELECT Элемент.Логическое_значение,Элемент.Индекс_КЛБ_поГоризонтали," +
+                            "Элемент.Индекс_КЛБ_поВертикали FROM Элемент WHERE Элемент.Номер_схемы = @SchemeNum;"; // SQL-запрос показа всех проектов
+                MyCommand = new OleDbCommand(SqlString, connect); // Формирование команды запроса
+                Parameter1 = new OleDbParameter();
+                Parameter1.OleDbType = OleDbType.VarChar;
+                Parameter1.ParameterName = "@SchemeNum"; // задание параметра для запроса
+                Parameter1.Value = scheme.NumScheme;
+                MyCommand.Parameters.Add(Parameter1);
+                myDataReader = MyCommand.ExecuteReader();//Выполнение SQL-команды   
+                elements = new List<Element>();
+                while (myDataReader.Read())
+                {
+                    elements.Add(new Element(myDataReader["Логическое_значение"].ToString(),myDataReader["Индекс_КЛБ_поГоризонтали"].ToString(),
+                        myDataReader["Индекс_КЛБ_поВертикали"].ToString()));
+                }
+
             }
             catch (Exception e)
             {
