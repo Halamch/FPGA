@@ -102,7 +102,7 @@ namespace SAPR_FPGA
                         myDataReader["Индекс_КЛБ_поВертикали"].ToString()));
                 }
 
-                //Заполнение данных о маршруте
+                //Заполнение данных о маршрутах
                 SqlString = "SELECT Маршрут.Элемент_источник,Маршрут.Элемент_приемник,Маршрут.Длина_маршрута " +
                             "FROM Маршрут WHERE Маршрут.Номер_схемы = @SchemeNum;"; // SQL-запрос показа всех проектов
                 MyCommand = new OleDbCommand(SqlString, connect); // Формирование команды запроса
@@ -113,12 +113,38 @@ namespace SAPR_FPGA
                 MyCommand.Parameters.Add(Parameter1);
                 myDataReader = MyCommand.ExecuteReader();//Выполнение SQL-команды  
                 routes = new List<Route>();
+                int i, j, length;
                 while (myDataReader.Read())
                 {
-                    int i = Convert.ToInt32(myDataReader["Элемент_источник"].ToString()) - 1;
-                    int j = Convert.ToInt32(myDataReader["Элемент_приемник"].ToString()) - 1;
-                    int length = myDataReader["Длина_маршрута"].ToString().Trim() == String.Empty ? 0 : Convert.ToInt32(myDataReader["Длина_маршрута"].ToString());
+                    i = Convert.ToInt32(myDataReader["Элемент_источник"].ToString()) - 1;
+                    j = Convert.ToInt32(myDataReader["Элемент_приемник"].ToString()) - 1;
+                    length = myDataReader["Длина_маршрута"].ToString().Trim() == String.Empty ? 0 : Convert.ToInt32(myDataReader["Длина_маршрута"].ToString());
                     routes.Add(new Route(elements[i], elements[j], length));
+                }
+
+
+                //Заполнение данных о путях
+                SqlString = "SELECT Путь.Номер_маршрута,Путь.Элемент_начало,Путь.Элемент_конец,Путь.Длина_пути FROM Путь WHERE Путь.Номер_маршрута between @min AND @max;"; // SQL-запрос показа всех проектов
+                MyCommand = new OleDbCommand(SqlString, connect); // Формирование команды запроса
+                Parameter1 = new OleDbParameter();
+                Parameter1.OleDbType = OleDbType.VarChar;
+                Parameter1.ParameterName = "@min"; // задание параметра для запроса
+                Parameter1.Value = 1;
+                MyCommand.Parameters.Add(Parameter1);
+                OleDbParameter Parameter2 = new OleDbParameter();
+                Parameter2.OleDbType = OleDbType.VarChar;
+                Parameter2.ParameterName = "@max"; // задание параметра для запроса
+                Parameter2.Value = routes.Count;
+                MyCommand.Parameters.Add(Parameter2);
+                myDataReader = MyCommand.ExecuteReader();//Выполнение SQL-команды 
+                int k,Pathlength;
+                while (myDataReader.Read())
+                {
+                    i = Convert.ToInt32(myDataReader["Номер_маршрута"].ToString()) - 1;
+                    j = Convert.ToInt32(myDataReader["Элемент_начало"].ToString()) - 1;
+                    k = Convert.ToInt32(myDataReader["Элемент_конец"].ToString()) - 1;
+                    Pathlength = myDataReader["Длина_пути"].ToString().Trim() == String.Empty ? 0 : Convert.ToInt32(myDataReader["Длина_пути"].ToString());
+                    routes[i].paths.Add(new Path(elements[j],elements[k],Pathlength));
                 }
             }
             catch (Exception e)

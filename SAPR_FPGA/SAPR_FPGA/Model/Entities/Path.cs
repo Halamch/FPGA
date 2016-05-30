@@ -12,9 +12,16 @@ namespace SAPR_FPGA
         public Element End; // элемент конец
         public int length; // длина пути
 
-        public Path(Element Start, Element End)
+        public Path(Element Start, Element End,int length)
         {
-            
+            this.Start = Start;
+            this.End = End;
+            this.length = length;
+        }
+
+        public Path()
+        {
+
         }
     }
 }

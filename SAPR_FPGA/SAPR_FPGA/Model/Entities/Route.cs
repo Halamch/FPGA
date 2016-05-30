@@ -10,7 +10,7 @@ namespace SAPR_FPGA
     {
         public Element Source; // Элемент источник сигнала
         public Element Receiver; // Элемент приемник сигнала
-        public List<Path> paths; // список путей входящих в маршрут
+        public List<Path> paths = new List<Path>(); // список путей входящих в маршрут
         public int length; // длина маршрута
         public Route(Element Source, Element Receiver,int length)
         {
