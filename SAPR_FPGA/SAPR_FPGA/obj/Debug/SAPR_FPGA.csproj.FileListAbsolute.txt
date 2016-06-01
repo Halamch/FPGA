@@ -25,10 +25,8 @@ C:\Полезная информация\Учеба\ДИПЛОМ\GitPoligon\SAPR
 C:\Полезная информация\Учеба\ДИПЛОМ\GitPoligon\SAPR_FPGA\SAPR_FPGA\bin\Debug\3DTools.pdb
 C:\Полезная информация\Учеба\ДИПЛОМ\GitPoligon\SAPR_FPGA\SAPR_FPGA\obj\Debug\SAPR_FPGA.csprojResolveAssemblyReference.cache
 C:\Полезная информация\Учеба\ДИПЛОМ\GitPoligon\SAPR_FPGA\SAPR_FPGA\obj\Debug\View\OpenProject.baml
-C:\Полезная информация\Учеба\ДИПЛОМ\GitPoligon\SAPR_FPGA\SAPR_FPGA\obj\Debug\View\View.baml
 C:\Полезная информация\Учеба\ДИПЛОМ\GitPoligon\SAPR_FPGA\SAPR_FPGA\obj\Debug\Controller\MainController.g.cs
 C:\Полезная информация\Учеба\ДИПЛОМ\GitPoligon\SAPR_FPGA\SAPR_FPGA\obj\Debug\View\OpenProject.g.cs
-C:\Полезная информация\Учеба\ДИПЛОМ\GitPoligon\SAPR_FPGA\SAPR_FPGA\obj\Debug\View\View.g.cs
 C:\Полезная информация\Учеба\ДИПЛОМ\GitPoligon\SAPR_FPGA\SAPR_FPGA\obj\Debug\App.g.cs
 C:\Полезная информация\Учеба\ДИПЛОМ\GitPoligon\SAPR_FPGA\SAPR_FPGA\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Полезная информация\Учеба\ДИПЛОМ\GitPoligon\SAPR_FPGA\SAPR_FPGA\obj\Debug\SAPR_FPGA_MarkupCompile.cache

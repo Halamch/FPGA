@@ -46,15 +46,81 @@
                 
             </Grid>
             <Grid Grid.Column="0"  HorizontalAlignment="Stretch"  Grid.ColumnSpan="2" >
-                <Grid x:Name ="WorkGrid"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                    
-    
-                </Grid>
+                <Grid x:Name ="WorkG"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#A0A9B2"  MouseWheel="WorkGrid_MouseWheel"  MouseLeftButtonDown="WorkGrid_MouseLeftButtonDown"></Grid>
+                <Viewport3D x:Name="port3d"  MouseWheel="WorkGrid_MouseWheel" MouseLeftButtonDown="port3d_MouseLeftButtonDown" >
+                    <!--Камера-->
+                    <Viewport3D.Camera>
+                        <PerspectiveCamera x:Name="Perspective" Position="0,0,-10000" LookDirection="0,0,10000" UpDirection="0,1,0" FieldOfView="30"/>
+                    </Viewport3D.Camera>
+
+                    <!--Освещение-->
+                    <ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <DirectionalLight Color="White" Direction="0,0,100" />
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
 
 
 
+
+
+
+
+                    <!--Трехмерный объект Trig-->
+                    <ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <GeometryModel3D>
+                                <!--Геометрия объекта-->
+                                <GeometryModel3D.Geometry>
+                                    <MeshGeometry3D x:Name="Trig" Positions="-1000,-1000,1 1000,1000,1 1000,-1000,1"
+                                                TriangleIndices="0,1,2" />
+                                </GeometryModel3D.Geometry>
+                                <!--Материал для лицевой стороны-->
+                                <GeometryModel3D.Material>
+                                    <DiffuseMaterial Brush="#385924" />
+                                </GeometryModel3D.Material>
+                                <!--Материал для изнаночной стороны-->
+                                <GeometryModel3D.BackMaterial>
+                                    <DiffuseMaterial Brush="Green" />
+                                </GeometryModel3D.BackMaterial>
+                            </GeometryModel3D>
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
+
+                    <!--Трехмерный объект Trig2-->
+                    <ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <GeometryModel3D>
+                                <!--Геометрия объекта-->
+                                <GeometryModel3D.Geometry>
+                                    <MeshGeometry3D x:Name="Trig2" Positions="-1000,-1000,1 1000,1000,1 -1000,1000,1"
+                                                TriangleIndices="0,1,2" />
+                                </GeometryModel3D.Geometry>
+                                <!--Материал для лицевой стороны-->
+                                <GeometryModel3D.Material>
+                                    <DiffuseMaterial Brush="#385924" />
+                                </GeometryModel3D.Material>
+                                <!--Материал для изнаночной стороны-->
+                                <GeometryModel3D.BackMaterial>
+                                    <DiffuseMaterial Brush="Green" />
+                                </GeometryModel3D.BackMaterial>
+                            </GeometryModel3D>
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
+
+
+                    <!--Для отладки используем объект ScreenSpaceLines3D, который отображает оси
+                Взят из библиотеки 3DTools-->
+                    <tools:ScreenSpaceLines3D Points="0,-10,0 0,10,0" Thickness="1" Color="Blue" />
+                    <tools:ScreenSpaceLines3D Points="-10,0,0 10,0,0" Thickness="1" Color="Red" />
+                    <!--  <tools:ScreenSpaceLines3D Points="0,0,-10 0,0,10" Thickness="1" Color="Green" /> -->
+
+                </Viewport3D>
 
             </Grid>
+
+
+
         </Grid>
 
     </Grid>
