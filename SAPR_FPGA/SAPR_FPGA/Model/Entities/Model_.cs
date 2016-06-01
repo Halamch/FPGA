@@ -21,7 +21,7 @@ namespace SAPR_FPGA
         Scheme scheme; // Номер схемы и наименование
         List<Route> routes;  // маршруты
         private List<Element> elements; //список элементов схемы
-
+        private int L = 2;
         public List<ProjectExploler> Exprojects
         {
             get { return _exprojects; }
@@ -79,7 +79,7 @@ namespace SAPR_FPGA
                 while (myDataReader.Read())
                 {
                     fpga.Model = myDataReader["Модель"].ToString();
-                    fpga.CountCPD = Convert.ToInt32(myDataReader["Количество_КЛБ"].ToString());
+                    fpga.CountCLB = Convert.ToInt32(myDataReader["Количество_КЛБ"].ToString());
                     fpga.ChannelWidth = Convert.ToInt32(myDataReader["Ширина_канала"].ToString());
                     scheme.NumScheme = Convert.ToInt32(myDataReader["Номер_схемы"].ToString());
                     scheme.name = myDataReader["Наименование"].ToString();
@@ -150,9 +150,31 @@ namespace SAPR_FPGA
             catch (Exception e)
             {
                 ErrorMessage = e.Message;
+                connect.Close();
+                return ErrorMessage;
             }
+            connect.Close();
             return String.Empty;
 
+        }
+
+        // подсчет параметров микросхемы, размерность матрицы и т.д.
+        public int[] CalculateGeometricParameters() 
+        {
+            int[] GeometricParameters = new int[6];
+            double CLBRow = Math.Sqrt(fpga.CountCLB);
+            if (CLBRow - Math.Round(CLBRow) == 0) // квадратная поэтому берем из квадрата и проверяем можно ли по вертикали и горизонтали отложить равное количество КЛБ
+            {
+                int Row = Convert.ToInt32(CLBRow);
+                GeometricParameters[0] = fpga.CountCLB;
+                GeometricParameters[1] = fpga.ChannelWidth;
+                GeometricParameters[2] = Row * 2 + 1; // размерность матрицы КЛБ (квадратная)
+                GeometricParameters[3] = fpga.ChannelWidth + 1; // размер стороны КЛБ
+                GeometricParameters[4] = L;// длина канала
+                GeometricParameters[5] = (2 * L + GeometricParameters[3]) * (Row * 2 + 1); // размер микросхемы (квадратная)
+                return GeometricParameters;
+            }
+            return null;
         }
     }
 }

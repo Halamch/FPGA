@@ -40,16 +40,14 @@
 
             <Grid Grid.Column="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#E1E1E2">
                 <StackPanel  HorizontalAlignment="Stretch"  VerticalAlignment="Bottom" Margin="10,0,10,10">
-                    <Button Content="Разместить" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" />
+                    <Button x:Name="Event" Content="Разместить" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" />
                     <ProgressBar x:Name="Progress" HorizontalAlignment="Stretch" Height="30"  VerticalAlignment="Top" />
                 </StackPanel>
                 
             </Grid>
             <Grid Grid.Column="0"  HorizontalAlignment="Stretch"  Grid.ColumnSpan="2" >
                 <Grid x:Name ="WorkGrid"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                    <view:View>
-                        
-                    </view:View>
+                    
     
                 </Grid>
 

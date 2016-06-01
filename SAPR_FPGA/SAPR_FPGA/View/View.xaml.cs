@@ -26,12 +26,14 @@ namespace SAPR_FPGA.View
         double y = 0;
         private double zdirection = 10000;
         private int masSizeX = 100, masSizeY = 100;
+        private MeshGeometry3D mesh;
         public View()
         {
             InitializeComponent();
             Perspective.LookDirection = new Vector3D(0, 0, zdirection);
             Perspective.Position = new Point3D(0, 0, -zdirection);
         }
+
 
         double Clamp(double val, double min, double max)
         {
@@ -127,8 +129,8 @@ namespace SAPR_FPGA.View
             mesh.TriangleIndices.Add(0);
             if (firstpiece)
             {
-                mesh.TriangleIndices.Add(2);
                 mesh.TriangleIndices.Add(1);
+                mesh.TriangleIndices.Add(2);
             }
             else
             {
@@ -148,5 +150,28 @@ namespace SAPR_FPGA.View
             viewport.Children.Add(model);
             // MessageBox.Show(viewport.Children[viewport.Children.Count - 1].ToString());
         }
+
+        public void GetGeometricParams(int[] calculateGeometricParameters, Viewport3D port3)
+        {
+            // Positions="-1000,-1000,1 1000,1000,1 1000,-1000,1"
+            //mesh = new MeshGeometry3D();
+            //double MicroSize = Convert.ToDouble(calculateGeometricParameters[5]);
+            //mesh.Positions.Clear();
+            //mesh.Positions.Add(new Point3D(-MicroSize, -MicroSize, 1));
+            //mesh.Positions.Add(new Point3D(MicroSize, MicroSize, 1));
+            //mesh.Positions.Add(new Point3D(MicroSize, -MicroSize, 1));
+            drawTriangle(new Point3D(-99, -99, 1), new Point3D(99, 99, 1), new Point3D(99, -99, 1), Colors.Blue, port3, true);
+        }
+
+
+
+        
+
+           //GeometricParameters[0] = fpga.CountCLB;
+           //     GeometricParameters[1] = fpga.ChannelWidth;
+           //     GeometricParameters[2] = Row * 2 + 1; // размерность матрицы КЛБ (квадратная)
+           //     GeometricParameters[3] = fpga.ChannelWidth + 1; // размер стороны КЛБ
+           //     GeometricParameters[4] = L;// длина канала
+           //     GeometricParameters[5] = (2 * L + GeometricParameters[3]) * (Row * 2 + 1); // размер микросхемы (квадратная)
     }
 }
